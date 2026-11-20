@@ -1,0 +1,794 @@
+/* ==========================================================================
+   BookBuddy – Smart Library Mobile App
+   Custom CSS Theme Overrides for jQuery Mobile 1.4.5
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Root Variables & Reset
+   -------------------------------------------------------------------------- */
+:root {
+  --primary: #4f46e5;         /* Indigo 600 */
+  --primary-hover: #4338ca;   /* Indigo 700 */
+  --primary-light: #e0e7ff;   /* Indigo 100 */
+  --secondary: #0d9488;       /* Teal 600 */
+  --secondary-light: #ccfbf1; /* Teal 100 */
+  --accent: #8b5cf6;          /* Purple 500 */
+
+  --bg-app: #f8fafc;          /* Slate 50 */
+  --surface: #ffffff;         /* White */
+  --surface-alt: #f1f5f9;     /* Slate 100 */
+
+  --text-main: #0f172a;       /* Slate 900 */
+  --text-muted: #64748b;      /* Slate 500 */
+  --text-light: #94a3b8;      /* Slate 400 */
+
+  --border: #e2e8f0;          /* Slate 200 */
+  --border-focus: #a5b4fc;    /* Indigo 300 */
+
+  --success: #10b981;        /* Emerald 500 */
+  --success-bg: #d1fae5;
+  --warning: #f59e0b;        /* Amber 500 */
+  --warning-bg: #fef3c7;
+  --danger: #ef4444;         /* Red 500 */
+  --danger-bg: #fee2e2;
+  --info: #3b82f6;           /* Blue 500 */
+  --info-bg: #dbeafe;
+
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.12);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Base resets & typography */
+body {
+  font-family: var(--font-family) !important;
+  background-color: #0f172a !important; /* Outer wrapper dark backdrop for desktop preview */
+  color: var(--text-main);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Desktop App Frame Container */
+@media screen and (min-width: 600px) {
+  .ui-mobile body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #0f172a !important;
+  }
+
+  .ui-page {
+    max-width: 480px !important;
+    height: 92vh !important;
+    max-height: 900px !important;
+    margin: 4vh auto !important;
+    position: relative !important;
+    border-radius: 32px !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 12px #1e293b !important;
+    overflow: hidden !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. jQuery Mobile Theme Overrides
+   -------------------------------------------------------------------------- */
+.ui-page, .ui-page-theme-a, .ui-body-a {
+  background-color: var(--bg-app) !important;
+  font-family: var(--font-family) !important;
+  text-shadow: none !important;
+}
+
+/* Disable old JQM text shadows & borders globally */
+*, .ui-btn, .ui-header, .ui-footer, .ui-content {
+  text-shadow: none !important;
+  box-sizing: border-box;
+}
+
+/* Header Styling */
+.ui-header, .ui-header.ui-bar-a {
+  background: var(--surface) !important;
+  border-bottom: 1px solid var(--border) !important;
+  color: var(--text-main) !important;
+  padding: 12px 16px !important;
+  min-height: 60px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.ui-header .ui-title {
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  color: var(--text-main) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ui-header .header-logo-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+
+.ui-header .header-action-btn {
+  background: var(--surface-alt) !important;
+  border: none !important;
+  border-radius: var(--radius-full) !important;
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--text-main) !important;
+  position: relative !important;
+  box-shadow: none !important;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: var(--danger);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--surface);
+}
+
+/* Main Content Area */
+.ui-content {
+  padding: 16px 16px 80px 16px !important; /* Space for fixed bottom navbar */
+}
+
+/* Footer & Bottom Navigation */
+.ui-footer-fixed {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: var(--surface) !important;
+  border-top: 1px solid var(--border) !important;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05) !important;
+  z-index: 1000 !important;
+  padding: 4px 0 !important;
+}
+
+.ui-navbar ul {
+  display: flex !important;
+  justify-content: space-around !important;
+}
+
+.ui-navbar li {
+  flex: 1 !important;
+  text-align: center;
+}
+
+.ui-navbar a, .ui-navbar a.ui-btn {
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-muted) !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  padding: 8px 0 6px 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 4px !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.ui-navbar a i {
+  font-size: 1.25rem;
+  margin: 0 !important;
+}
+
+.ui-navbar a.ui-btn-active, .ui-navbar a:hover {
+  color: var(--primary) !important;
+  background: transparent !important;
+}
+
+.ui-navbar a.ui-btn-active i {
+  color: var(--primary) !important;
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   3. Custom Component Cards & Widgets
+   -------------------------------------------------------------------------- */
+/* General Card Container */
+.bb-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+
+/* Welcome Header Banner */
+.welcome-banner {
+  background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-banner::after {
+  content: "";
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.welcome-banner h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0 0 6px 0;
+}
+
+.welcome-banner p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Quick Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stat-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.stat-icon-wrapper.blue { background: var(--primary-light); color: var(--primary); }
+.stat-icon-wrapper.amber { background: var(--warning-bg); color: var(--warning); }
+.stat-icon-wrapper.red { background: var(--danger-bg); color: var(--danger); }
+.stat-icon-wrapper.emerald { background: var(--success-bg); color: var(--success); }
+
+.stat-info .stat-value {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.stat-info .stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Section Titles */
+.section-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0 12px 0;
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.section-link {
+  font-size: 0.8rem;
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Search Bar Override */
+.ui-input-search.ui-body-inherit {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-full) !important;
+  box-shadow: var(--shadow-sm) !important;
+  padding: 4px 14px !important;
+  margin-bottom: 16px !important;
+}
+
+.ui-input-search input {
+  font-size: 0.9rem !important;
+  color: var(--text-main) !important;
+}
+
+/* Book Cards */
+.book-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 14px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  gap: 14px;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.book-cover {
+  width: 75px;
+  height: 105px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+  background: #cbd5e1;
+}
+
+.book-details-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.book-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 4px 0;
+  line-height: 1.3;
+}
+
+.book-author {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0 0 6px 0;
+}
+
+.book-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.badge-available { background: var(--success-bg); color: var(--success); }
+.badge-borrowed { background: var(--warning-bg); color: var(--warning); }
+.badge-category { background: var(--primary-light); color: var(--primary); }
+
+.rating-stars {
+  color: #f59e0b;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Custom Buttons Override */
+.ui-btn.bb-btn {
+  background: var(--primary) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: var(--radius-sm) !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  padding: 10px 16px !important;
+  box-shadow: var(--shadow-sm) !important;
+  margin: 6px 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+}
+
+.ui-btn.bb-btn:hover {
+  background: var(--primary-hover) !important;
+}
+
+.ui-btn.bb-btn-outline {
+  background: transparent !important;
+  color: var(--primary) !important;
+  border: 1px solid var(--primary) !important;
+}
+
+.ui-btn.bb-btn-danger {
+  background: var(--danger) !important;
+  color: white !important;
+}
+
+.ui-btn.bb-btn-secondary {
+  background: var(--surface-alt) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* Reading Progress Cards */
+.progress-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background: var(--surface-alt);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  border-radius: var(--radius-full);
+}
+
+/* Quick Action Grid */
+.quick-action-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.action-icon-box {
+  width: 52px;
+  height: 52px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease;
+}
+
+.action-item:hover .action-icon-box {
+  transform: translateY(-3px);
+}
+
+.action-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-main);
+  text-align: center;
+}
+
+/* Filter Bar Pills */
+.filter-pills {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filter-pill {
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+  background: var(--surface);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.filter-pill.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+/* Category Grid */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.category-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none !important;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-light);
+}
+
+.category-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.category-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.category-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Detailed Book View */
+.detail-hero {
+  text-align: center;
+  padding: 10px 0 20px 0;
+}
+
+.detail-cover {
+  width: 140px;
+  height: 200px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+  margin-bottom: 16px;
+}
+
+.detail-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0 0 4px 0;
+}
+
+.detail-author {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0 0 12px 0;
+}
+
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+
+.info-table td {
+  padding: 8px 0;
+  font-size: 0.85rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.info-table td:first-child {
+  color: var(--text-muted);
+  font-weight: 600;
+  width: 40%;
+}
+
+.info-table td:last-child {
+  color: var(--text-main);
+  font-weight: 700;
+  text-align: right;
+}
+
+/* JQM Collapsible Overrides (Library Rules) */
+.ui-collapsible-set {
+  margin: 0 !important;
+}
+
+.ui-collapsible-heading .ui-btn {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--text-main) !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  padding: 14px 16px !important;
+  margin-bottom: 8px !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.ui-collapsible-content {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-top: none !important;
+  border-radius: 0 0 var(--radius-md) var(--radius-md) !important;
+  padding: 14px !important;
+  font-size: 0.85rem !important;
+  line-height: 1.5 !important;
+  color: var(--text-muted) !important;
+  margin-top: -12px !important;
+  margin-bottom: 12px !important;
+}
+
+/* Profile Styling */
+.profile-header {
+  text-align: center;
+  padding: 10px 0 20px 0;
+}
+
+.avatar-wrapper {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  font-size: 2.2rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-md);
+  border: 4px solid var(--surface);
+}
+
+.profile-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0 0 2px 0;
+}
+
+.profile-meta {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* Popup / Dialog Restyling */
+.ui-popup-container {
+  z-index: 1100 !important;
+}
+
+.ui-popup {
+  background: var(--surface) !important;
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--border) !important;
+  padding: 20px !important;
+  max-width: 320px !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.popup-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.popup-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+/* Empty State Placeholder */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+
+.empty-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.empty-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}

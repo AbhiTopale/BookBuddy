@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BookBuddy – Smart Library Mobile App</title>
+
+  <!-- jQuery Mobile 1.4.5 CDN Stylesheet -->
+  <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  
+  <!-- Font Awesome 6.4.0 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Modern App Theme Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- jQuery 2.1.4 Core CDN -->
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  
+  <!-- jQuery Mobile 1.4.5 Framework CDN -->
+  <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  
+  <!-- Custom Application Logic -->
+  <script src="js/app.js"></script>
+</head>
+<body>
+
+  <!-- =========================================================================
+       SHARED JQUERY MOBILE ACTION POPUP DIALOG
+       ========================================================================= -->
+  <!-- jQuery Mobile Popup Component (data-role="popup") -->
+  <div data-role="popup" id="action-popup" data-overlay-theme="b" data-theme="a" data-dismissible="true" class="ui-corner-all">
+    <div style="padding: 10px 15px; text-align: center;">
+      <h3 id="popup-title" class="popup-title">Notification</h3>
+      <p id="popup-message" class="popup-text">Operation completed successfully.</p>
+      <a href="#" data-rel="back" class="ui-btn bb-btn" style="width: 100%; margin-top: 12px;">OK, Great</a>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       PAGE 1 — HOME / DASHBOARD
+       jQuery Mobile Page: data-role="page" id="home"
+       ========================================================================= -->
+  <!-- jQuery Mobile Page Container -->
+  <div data-role="page" id="home">
+
+    <!-- jQuery Mobile Header Component -->
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+      <h1 class="ui-title">
+        <span class="header-logo-icon"><i class="fa-solid fa-book-bookmark"></i></span>
+        BookBuddy
+      </h1>
+      <a href="#notices" class="ui-btn-right header-action-btn">
+        <i class="fa-regular fa-bell" style="font-size: 1.1rem;"></i>
+        <span class="notification-badge">3</span>
+      </a>
+    </div>
+
+    <!-- jQuery Mobile Main Content Area -->
+    <div data-role="main" class="ui-content">
+      
+      <!-- Welcome Header Banner -->
+      <div class="welcome-banner">
+        <h2>Good Morning, Student 👋</h2>
+        <p>Find your next great read in the central library catalog.</p>
+      </div>
+
+      <!-- Quick Search Link Box -->
+      <a href="#browse" style="text-decoration: none;">
+        <div class="ui-input-search ui-body-inherit ui-corner-all ui-shadow-inset ui-input-has-clear">
+          <input type="text" placeholder="Search books, authors, or ISBN..." readonly style="cursor: pointer;">
+        </div>
+      </a>
+
+      <!-- Quick Statistics Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon-wrapper blue"><i class="fa-solid fa-book-open"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-borrowed-count">3</div>
+            <div class="stat-label">Borrowed</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-wrapper amber"><i class="fa-solid fa-clock"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-due-count">1</div>
+            <div class="stat-label">Due Soon</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-wrapper red"><i class="fa-solid fa-heart"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-wishlist-count">5</div>
+            <div class="stat-label">Wishlist</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon-wrapper emerald"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+          <div class="stat-info">
+            <div class="stat-value" id="stat-fine-amount">₹0</div>
+            <div class="stat-label">Current Fine</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Navigation Grid -->
+      <div class="quick-action-grid">
+        <a href="#browse" class="action-item">
+          <div class="action-icon-box"><i class="fa-solid fa-compass"></i></div>
+          <span class="action-label">Browse</span>
+        </a>
+        <a href="#my-books" class="action-item">
+          <div class="action-icon-box"><i class="fa-solid fa-swatchbook"></i></div>
+          <span class="action-label">My Books</span>
+        </a>
+        <a href="#categories" class="action-item">
+          <div class="action-icon-box"><i class="fa-solid fa-layer-group"></i></div>
+          <span class="action-label">Categories</span>
+        </a>
+        <a href="#rules" class="action-item">
+          <div class="action-icon-box"><i class="fa-solid fa-gavel"></i></div>
+          <span class="action-label">Rules</span>
+        </a>
+      </div>
+
+      <!-- Continue Reading Progress Section -->
+      <div class="section-title-wrap">
+        <h3 class="section-title">Continue Reading</h3>
+        <a href="#my-books" class="section-link">View All</a>
+      </div>
+      <div id="home-continue-reading">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+      <!-- Popular Books Section -->
+      <div class="section-title-wrap">
+        <h3 class="section-title">Popular Titles</h3>
+        <a href="#browse" class="section-link">Explore</a>
+      </div>
+      <div id="home-popular-books">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+    </div>
+
+    <!-- jQuery Mobile Footer Component with Fixed Navbar -->
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="ui-footer-fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#home" class="ui-btn-active"><i class="fa-solid fa-house"></i>Home</a></li>
+          <li><a href="#browse"><i class="fa-solid fa-magnifying-glass"></i>Browse</a></li>
+          <li><a href="#my-books"><i class="fa-solid fa-book"></i>My Books</a></li>
+          <li><a href="#wishlist"><i class="fa-regular fa-heart"></i>Wishlist</a></li>
+          <li><a href="#profile"><i class="fa-regular fa-user"></i>Profile</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================================
+       PAGE 2 — BROWSE BOOKS
+       jQuery Mobile Page: data-role="page" id="browse"
+       ========================================================================= -->
+  <div data-role="page" id="browse">
+
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+      <h1 class="ui-title">Browse Library</h1>
+      <a href="#categories" class="ui-btn-right header-action-btn">
+        <i class="fa-solid fa-filter" style="font-size: 1rem;"></i>
+      </a>
+    </div>
+
+    <div data-role="main" class="ui-content">
+      
+      <!-- Instant Search Bar Input -->
+      <input type="search" id="browse-search-input" placeholder="Search title, author, or ISBN...">
+
+      <!-- Availability Checkbox Filter Toggle -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin: 8px 0 14px 0;">
+        <span id="browse-count" style="font-size:0.8rem; font-weight:700; color:var(--text-muted);">12 books found</span>
+        <label style="font-size:0.8rem; font-weight:600; color:var(--text-main); display:flex; align-items:center; gap:6px; cursor:pointer;">
+          <input type="checkbox" id="browse-available-toggle" style="margin:0;"> Available Only
+        </label>
+      </div>
+
+      <!-- Horizontal Scrollable Category Filter Pills -->
+      <div class="filter-pills">
+        <a href="#" class="filter-pill active" data-category="All">All Categories</a>
+        <a href="#" class="filter-pill" data-category="Computer Science">Computer Science</a>
+        <a href="#" class="filter-pill" data-category="Programming">Programming</a>
+        <a href="#" class="filter-pill" data-category="Fiction">Fiction</a>
+        <a href="#" class="filter-pill" data-category="Science">Science</a>
+        <a href="#" class="filter-pill" data-category="Business">Business</a>
+        <a href="#" class="filter-pill" data-category="Self Development">Self Development</a>
+        <a href="#" class="filter-pill" data-category="History">History</a>
+        <a href="#" class="filter-pill" data-category="Design">Design</a>
+      </div>
+
+      <!-- Dynamic Book Cards Container -->
+      <div id="browse-books-list">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+    </div>
+
+    <!-- Footer Navbar -->
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="ui-footer-fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#home"><i class="fa-solid fa-house"></i>Home</a></li>
+          <li><a href="#browse" class="ui-btn-active"><i class="fa-solid fa-magnifying-glass"></i>Browse</a></li>
+          <li><a href="#my-books"><i class="fa-solid fa-book"></i>My Books</a></li>
+          <li><a href="#wishlist"><i class="fa-regular fa-heart"></i>Wishlist</a></li>
+          <li><a href="#profile"><i class="fa-regular fa-user"></i>Profile</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================================
+       PAGE 3 — BOOK DETAILS
+       jQuery Mobile Page: data-role="page" id="details"
+       ========================================================================= -->
+  <div data-role="page" id="details">
+
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+      <a href="#browse" class="ui-btn-left header-action-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      <h1 class="ui-title">Book Details</h1>
+    </div>
+
+    <div data-role="main" class="ui-content">
+      
+      <!-- Book Cover Hero Section -->
+      <div class="detail-hero">
+        <img id="detail-cover-img" src="" alt="Book Cover" class="detail-cover">
+        <h2 id="detail-title" class="detail-title">Book Title</h2>
+        <div id="detail-author" class="detail-author">by Author Name</div>
+        
+        <div style="display:flex; justify-content:center; gap:8px; align-items:center;">
+          <span id="detail-category-badge" class="badge badge-category">Category</span>
+          <span id="detail-rating" class="rating-stars"><i class="fa-solid fa-star"></i> 4.8 / 5.0</span>
+        </div>
+      </div>
+
+      <!-- Book Description Card -->
+      <div class="bb-card">
+        <h4 style="font-weight:700; margin:0 0 8px 0; color:var(--text-main);">About Book</h4>
+        <p id="detail-description" style="font-size:0.85rem; color:var(--text-muted); line-height:1.5; margin:0;">
+          Detailed synopsis of the book...
+        </p>
+      </div>
+
+      <!-- Book Info Metadata Table -->
+      <div class="bb-card">
+        <h4 style="font-weight:700; margin:0 0 8px 0; color:var(--text-main);">Library Information</h4>
+        <table class="info-table">
+          <tr>
+            <td>ISBN Number</td>
+            <td id="detail-isbn">978-0000000000</td>
+          </tr>
+          <tr>
+            <td>Publisher</td>
+            <td id="detail-publisher">Publisher Name</td>
+          </tr>
+          <tr>
+            <td>Publication Year</td>
+            <td id="detail-year">2024</td>
+          </tr>
+          <tr>
+            <td>Page Count</td>
+            <td id="detail-pages">350 pages</td>
+          </tr>
+          <tr>
+            <td>Availability</td>
+            <td id="detail-copies" style="color:var(--primary);">3 of 5 copies</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <button id="btn-borrow-book" class="ui-btn bb-btn">
+          <i class="fa-solid fa-book-bookmark"></i> Borrow Book
+        </button>
+        <button id="btn-toggle-wishlist" class="ui-btn bb-btn bb-btn-outline">
+          <i class="fa-regular fa-heart"></i> Add to Wishlist
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Footer Navbar -->
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="ui-footer-fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#home"><i class="fa-solid fa-house"></i>Home</a></li>
+          <li><a href="#browse" class="ui-btn-active"><i class="fa-solid fa-magnifying-glass"></i>Browse</a></li>
+          <li><a href="#my-books"><i class="fa-solid fa-book"></i>My Books</a></li>
+          <li><a href="#wishlist"><i class="fa-regular fa-heart"></i>Wishlist</a></li>
+          <li><a href="#profile"><i class="fa-regular fa-user"></i>Profile</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================================
+       PAGE 4 — MY BOOKS (BORROWED BOOKS)
+       jQuery Mobile Page: data-role="page" id="my-books"
+       ========================================================================= -->
+  <div data-role="page" id="my-books">
+
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+      <h1 class="ui-title">My Borrowed Books</h1>
+    </div>
+
+    <div data-role="main" class="ui-content">
+      
+      <!-- Borrowed Books Container -->
+      <div id="my-books-list">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+    </div>
+
+    <!-- Footer Navbar -->
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="ui-footer-fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#home"><i class="fa-solid fa-house"></i>Home</a></li>
+          <li><a href="#browse"><i class="fa-solid fa-magnifying-glass"></i>Browse</a></li>
+          <li><a href="#my-books" class="ui-btn-active"><i class="fa-solid fa-book"></i>My Books</a></li>
+          <li><a href="#wishlist"><i class="fa-regular fa-heart"></i>Wishlist</a></li>
+          <li><a href="#profile"><i class="fa-regular fa-user"></i>Profile</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================================
+       PAGE 5 — WISHLIST
+       jQuery Mobile Page: data-role="page" id="wishlist"
+       ========================================================================= -->
+  <div data-role="page" id="wishlist">
+
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+      <h1 class="ui-title">Saved Wishlist</h1>
+    </div>
+
+    <div data-role="main" class="ui-content">
+      
+      <!-- Saved Wishlist Container -->
+      <div id="wishlist-container">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+    </div>
+
+    <!-- Footer Navbar -->
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="ui-footer-fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#home"><i class="fa-solid fa-house"></i>Home</a></li>
+          <li><a href="#browse"><i class="fa-solid fa-magnifying-glass"></i>Browse</a></li>
+          <li><a href="#my-books"><i class="fa-solid fa-book"></i>My Books</a></li>
+          <li><a href="#wishlist" class="ui-btn-active"><i class="fa-regular fa-heart"></i>Wishlist</a></li>
+          <li><a href="#profile"><i class="fa-regular fa-user"></i>Profile</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================================
+       PAGE 6 — CATEGORIES
+       jQuery Mobile Page: data-role="page" id="categories"
+       ========================================================================= -->
+  <div data-role="page" id="categories">
+
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+      <h1 class="ui-title">Explore Categories</h1>
+    </div>
+
+    <div data-role="main" class="ui-content">
+      
+      <!-- Category Grid Container -->
+      <div id="categories-grid" class="category-grid">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+    </div>
+
+    <!-- Footer Navbar -->
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="ui-footer-fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#home"><i class="fa-solid fa-house"></i>Home</a></li>
+          <li><a href="#browse" class="ui-btn-active"><i class="fa-solid fa-magnifying-glass"></i>Browse</a></li>
+          <li><a href="#my-books"><i class="fa-solid fa-book"></i>My Books</a></li>
+          <li><a href="#wishlist"><i class="fa-regular fa-heart"></i>Wishlist</a></li>
+          <li><a href="#profile"><i class="fa-regular fa-user"></i>Profile</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================================
+       PAGE 7 — LIBRARY NOTICES & ANNOUNCEMENTS
+       jQuery Mobile Page: data-role="page" id="notices"
+       ========================================================================= -->
+  <div data-role="page" id="notices">
+
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+      <a href="#home" class="ui-btn-left header-action-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      <h1 class="ui-title">Library Notices</h1>
+    </div>
+
+    <div data-role="main" class="ui-content">
+      
+      <!-- Notices Cards Container -->
+      <div id="notices-container">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+    </div>
+
+    <!-- Footer Navbar -->
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="ui-footer-fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#home" class="ui-btn-active"><i class="fa-solid fa-house"></i>Home</a></li>
+          <li><a href="#browse"><i class="fa-solid fa-magnifying-glass"></i>Browse</a></li>
+          <li><a href="#my-books"><i class="fa-solid fa-book"></i>My Books</a></li>
+          <li><a href="#wishlist"><i class="fa-regular fa-heart"></i>Wishlist</a></li>
+          <li><a href="#profile"><i class="fa-regular fa-user"></i>Profile</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================================
+       PAGE 8 — STUDENT PROFILE
+       jQuery Mobile Page: data-role="page" id="profile"
+       ========================================================================= -->
+  <div data-role="page" id="profile">
+
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+      <h1 class="ui-title">Student Profile</h1>
+    </div>
+
+    <div data-role="main" class="ui-content">
+      
+      <!-- Profile Header Block -->
+      <div class="profile-header">
+        <div class="avatar-wrapper">AS</div>
+        <h2 class="profile-name">Abhijit Student</h2>
+        <div class="profile-meta">Computer Science • Third Year</div>
+        <div style="font-size:0.75rem; color:var(--text-light); margin-top:2px;">ID: CS2026892</div>
+      </div>
+
+      <!-- Profile Library Stats Summary -->
+      <div class="stats-grid" style="margin-bottom: 20px;">
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="stat-value" id="profile-borrowed-count">12</div>
+            <div class="stat-label">Total Borrowed</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="stat-value" style="color:var(--success);">9</div>
+            <div class="stat-label">Returned On Time</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="stat-value" id="profile-wishlist-count">5</div>
+            <div class="stat-label">Saved Wishlist</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <div class="stat-value" id="profile-fine-amount" style="color:var(--success);">₹0</div>
+            <div class="stat-label">Unpaid Fine</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- jQuery Mobile Listview Component (data-role="listview") -->
+      <ul data-role="listview" data-inset="true" style="margin: 0 0 20px 0;">
+        <li><a href="#my-books"><i class="fa-solid fa-clock-rotate-left" style="margin-right:10px; color:var(--primary);"></i> Borrowing History</a></li>
+        <li><a href="#rules"><i class="fa-solid fa-book-journal-whills" style="margin-right:10px; color:var(--secondary);"></i> Library Regulations</a></li>
+        <li><a href="#notices"><i class="fa-regular fa-bell" style="margin-right:10px; color:var(--warning);"></i> Library Notices</a></li>
+        <li><a href="#rules"><i class="fa-solid fa-headset" style="margin-right:10px; color:var(--info);"></i> Help & Support</a></li>
+      </ul>
+
+      <!-- Account Actions -->
+      <button class="ui-btn bb-btn bb-btn-secondary" style="width:100%; border-color:var(--danger); color:var(--danger) !important;">
+        <i class="fa-solid fa-right-from-bracket"></i> Sign Out Account
+      </button>
+
+    </div>
+
+    <!-- Footer Navbar -->
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="ui-footer-fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#home"><i class="fa-solid fa-house"></i>Home</a></li>
+          <li><a href="#browse"><i class="fa-solid fa-magnifying-glass"></i>Browse</a></li>
+          <li><a href="#my-books"><i class="fa-solid fa-book"></i>My Books</a></li>
+          <li><a href="#wishlist"><i class="fa-regular fa-heart"></i>Wishlist</a></li>
+          <li><a href="#profile" class="ui-btn-active"><i class="fa-regular fa-user"></i>Profile</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================================
+       PAGE 9 — LIBRARY RULES & POLICIES
+       jQuery Mobile Page: data-role="page" id="rules"
+       ========================================================================= -->
+  <div data-role="page" id="rules">
+
+    <div data-role="header" data-position="fixed" data-tap-toggle="false">
+      <a href="#home" class="ui-btn-left header-action-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      <h1 class="ui-title">Library Rules</h1>
+    </div>
+
+    <div data-role="main" class="ui-content">
+      
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">
+        Please review the official college library regulations and borrowing terms below.
+      </p>
+
+      <!-- jQuery Mobile Collapsible Set Accordion (data-role="collapsible-set") -->
+      <div data-role="collapsible-set" data-theme="a" data-content-theme="a">
+        
+        <div data-role="collapsible" data-collapsed="false">
+          <h3>1. Borrowing Period & Limits</h3>
+          <p>
+            • Students may borrow up to <strong>3 books</strong> simultaneously.<br>
+            • Standard borrowing duration for undergraduate students is <strong>14 days</strong>.<br>
+            • Reference books and rare journals must remain inside the reading hall.
+          </p>
+        </div>
+
+        <div data-role="collapsible">
+          <h3>2. Book Renewal Policy</h3>
+          <p>
+            • Books can be renewed once for an additional <strong>7 days</strong> if no reserve requests exist.<br>
+            • Renewal can be initiated online directly through the BookBuddy mobile app or at the circulation desk.
+          </p>
+        </div>
+
+        <div data-role="collapsible">
+          <h3>3. Late Return & Fine Policy</h3>
+          <p>
+            • Overdue books incur a fine of <strong>₹5 per day</strong> per book.<br>
+            • Accounts with overdue fines exceeding ₹100 will have borrowing privileges temporarily suspended until dues are cleared.
+          </p>
+        </div>
+
+        <div data-role="collapsible">
+          <h3>4. Book Damage & Loss</h3>
+          <p>
+            • Markings, highlighting, or tearing pages is strictly prohibited.<br>
+            • In case of lost books, the borrower must replace the book with the latest edition or pay twice the current market cost.
+          </p>
+        </div>
+
+        <div data-role="collapsible">
+          <h3>5. Library Timings & Conduct</h3>
+          <p>
+            • Working Hours: Monday to Saturday, <strong>8:00 AM – 8:00 PM</strong>.<br>
+            • Maintain silence in reading zones.<br>
+            • Food and open beverages are strictly prohibited inside the main reading room.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Footer Navbar -->
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" class="ui-footer-fixed">
+      <div data-role="navbar">
+        <ul>
+          <li><a href="#home"><i class="fa-solid fa-house"></i>Home</a></li>
+          <li><a href="#browse"><i class="fa-solid fa-magnifying-glass"></i>Browse</a></li>
+          <li><a href="#my-books"><i class="fa-solid fa-book"></i>My Books</a></li>
+          <li><a href="#wishlist"><i class="fa-regular fa-heart"></i>Wishlist</a></li>
+          <li><a href="#profile" class="ui-btn-active"><i class="fa-regular fa-user"></i>Profile</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
